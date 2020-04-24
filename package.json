@@ -1,0 +1,25 @@
+{
+  "name": "ez",
+  "version": "1.0.0",
+  "description": "Weather test",
+  "author": "Carl",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/pwa": "^3.0.0-0",
+    "nuxt": "^2.0.0"
+  },
+  "devDependencies": {
+    "@mdi/font": "^5.0.45",
+    "@nuxtjs/vuetify": "^1.0.0",
+    "font-awesome": "4.7.0",
+    "js-cookie": "^2.2.1",
+    "vuex-persistedstate": "^3.0.1"
+  }
+}
