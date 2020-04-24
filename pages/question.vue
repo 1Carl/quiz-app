@@ -64,7 +64,6 @@ export default {
       },
       correct(){
         this.corr++;
-        this.next();
       },
       retry(){
         this.$router.push('/')

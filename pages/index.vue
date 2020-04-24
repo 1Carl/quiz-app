@@ -15,7 +15,7 @@
           <v-select 
             class="sel"
             :items="cate"
-            v-model="quiz.cate.id"
+            v-model="quiz.cate"
             label="Category"
             item-text="name"
             item-value="id"
@@ -88,15 +88,14 @@ export default {
     }
   },
 
-  mounted(){
-    this.quiz.cate = this.cate[0];
+  beforeMount(){
+    this.quiz.cate = this.cate[0].id;
     this.quiz.diff = this.diff[0];
     this.che();
   },
   methods: {
     async choose(){
-      await console.log('https://opentdb.com/api.php?amount=10&category='+this.quiz.cate.id+'&difficulty='+this.quiz.diff+'&type=multiple')
-      await  axios.get('https://opentdb.com/api.php?amount=10&category='+this.quiz.cate.id+'&difficulty='+this.quiz.diff+'&type=multiple')
+      await  axios.get('https://opentdb.com/api.php?amount=10&category='+this.quiz.cate+'&difficulty='+this.quiz.diff+'&type=multiple')
             .then(res => this.questions = res.data.results)
             .catch(err => console.log(err))
             .then(res => this.$store.commit('fetque', this.questions))

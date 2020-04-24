@@ -15,6 +15,7 @@
                     v-for="(answer, i) in quest.answers"
                     :key="i"
                     @click="show(i)"
+                    :class="'list'+i"
                     >
                     <v-list-item-content>
                         <v-list-item-title v-text="answer">{{ answer }}</v-list-item-title>
@@ -24,9 +25,9 @@
             </v-list>
             <v-card-actions  align-content-space-around>
                 <v-spacer></v-spacer>
-                <v-btn class="buttn" color="indigo" @click="checkAns">Submit</v-btn>
+                <v-btn class="buttn" :disabled="answered" color="indigo" @click="checkAns">Submit</v-btn>
                 <v-spacer></v-spacer>
-                <v-btn class="buttn" @click="skipAns" text color="warning">Skip</v-btn>
+                <v-btn class="buttn" :disabled="!answered" @click="skipAns()" text color="warning">Next</v-btn>
                 <v-spacer></v-spacer>
             </v-card-actions>
         </v-card>
@@ -35,6 +36,7 @@
 
 <script>
 import _ from 'lodash'
+import $ from 'jquery'
 export default {
     name: 'que',
     props: [
@@ -43,7 +45,9 @@ export default {
     data(){
         return{
             model: '',
-            ans:false
+            ans:false,
+            correc: '',
+            answered: false
         }
     },
     methods: {
@@ -56,18 +60,28 @@ export default {
             }
         },
         checkAns(){
-            if(this.model == _.indexOf(this.quest.answers, _.toString(this.quest.correct_answer))){
+            this.correc = _.indexOf(this.quest.answers, _.toString(this.quest.correct_answer))
+            if(this.model == this.correc){
                 this.$emit('correct');
+                $('.list'+this.model).addClass('correct')
             }
-            else this.$emit('next');
-            this.model = ''
+            else{
+                $('.list'+this.model).addClass('incorrect')
+                $('.list'+this.correc).addClass('correct')
+            } 
+            this.answered = true
         },
         async sho(){
             this.ans = await true
         },
-        skipAns(){
-            this.$emit('next')
+        async skipAns(){
+            await $('.list'+this.model).removeClass('incorrect');
+            await $('.list'+this.correc).removeClass('correct')
             this.model = ''
+            this.correc= ''
+            await this.$emit('next')
+            this.model = await ''
+            this.answered = false
         }
     }, 
     mounted(){
@@ -78,5 +92,11 @@ export default {
 <style scoped>
     .buttn{
         width: 150px;
+    }
+    .correct{
+        background-color: green;
+    }
+    .incorrect{
+        background-color: red;
     }
 </style>
