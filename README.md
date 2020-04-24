@@ -1,6 +1,6 @@
 # ez
 
-> Weather test
+> NUxt test
 
 ## Build Setup
 
